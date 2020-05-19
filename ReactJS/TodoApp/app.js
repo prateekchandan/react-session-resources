@@ -1,12 +1,31 @@
+class TodoItem {
+    constructor (id, name, description) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+    }
+};
 
-'use strict';
+const todoItemList = [
+    new TodoItem(1, "First Item", "First Item Description"),
+    new TodoItem(2, "Second Item", "Second Item Description"),
+    new TodoItem(3, "Third Item", "Third Item Description"),
+    new TodoItem(4, "Fourth Item", "Fourth Item Description"),
+    new TodoItem(5, "Fifth Item", "Fifth Item Description")
+];
 
 class List extends React.Component {
   render() {
-    var child1 = React.createElement('li', null, 'First Text Content');
-    var child2 = React.createElement('li', null, 'Second Text Content');
-    var root = React.createElement('ul', { className: 'my-list' }, child1, child2);
+    var root = React.createElement('ul', null, ...this.getAllListItems());
     return root;
+  }
+
+  getAllListItems() {
+      let listItems = [];
+      todoItemList.forEach(item => {
+        listItems.push(React.createElement('li', null, item.name))
+      });
+      return listItems;
   }
 }
 
