@@ -1,5 +1,6 @@
 import React from 'react';
 import {todoItemList} from "./TodoItem";
+import ListItem from './ListItem';
 
 class List extends React.Component {
     render() {
@@ -11,7 +12,7 @@ class List extends React.Component {
     getAllListItems() {
         let listItems = [];
         todoItemList.forEach(item => {
-            listItems.push(<li>{item.name}</li>)
+            listItems.push(<ListItem name={item.name}/>)
          });
         return listItems;
     }
