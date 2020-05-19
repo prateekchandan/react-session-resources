@@ -1,7 +1,8 @@
 import React from 'react';
+import List from "./List";
 
 function App() {
-  return ( <div>Hello World!</div>);
+  return <List></List>;
 }
 
 export default App;
