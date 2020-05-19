@@ -6,14 +6,22 @@ class List extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedId: 3
+            selectedId: -1
         };
     }
 
     render() {
-        return <ul>
-            {this.getAllListItems()}
-        </ul>;
+        return (
+        <React.Fragment>
+            <ul>
+                {this.getAllListItems()}
+            </ul>
+            {this.state.description && <div>
+                {this.state.description}
+            </div>
+            }
+        </React.Fragment>
+        );
     }
   
     getAllListItems() {
@@ -21,8 +29,7 @@ class List extends React.Component {
         todoItemList.forEach(item => {
             listItems.push(
             <ListItem 
-                id={item.id}
-                name={item.name} 
+                item={item}
                 isSelected={item.id == this.state.selectedId}
                 onSelected={this.onItemSelected}
             />);
@@ -30,9 +37,10 @@ class List extends React.Component {
         return listItems;
     }
 
-    onItemSelected = (id) => {
+    onItemSelected = (item) => {
         this.setState({
-            selectedId: id
+            selectedId: item.id,
+            description: item.description
         })
     }
 }
