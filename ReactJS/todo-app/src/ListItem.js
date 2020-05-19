@@ -4,7 +4,7 @@ class ListItem extends React.Component {
     render() {
         if (this.props.isSelected) {
             return <span>
-                {this.props.name};
+                {this.props.name}
             </span>
         }
         return <button>
