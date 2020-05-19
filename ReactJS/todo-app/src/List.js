@@ -3,7 +3,6 @@ import {todoItemList} from "./TodoItem";
 import ListItem from './ListItem';
 
 class List extends React.Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -20,9 +19,21 @@ class List extends React.Component {
     getAllListItems() {
         let listItems = [];
         todoItemList.forEach(item => {
-            listItems.push(<ListItem name={item.name} isSelected={item.id == this.state.selectedId}/>)
+            listItems.push(
+            <ListItem 
+                id={item.id}
+                name={item.name} 
+                isSelected={item.id == this.state.selectedId}
+                onSelected={this.onItemSelected}
+            />);
          });
         return listItems;
+    }
+
+    onItemSelected = (id) => {
+        this.setState({
+            selectedId: id
+        })
     }
 }
 

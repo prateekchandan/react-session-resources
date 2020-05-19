@@ -7,9 +7,13 @@ class ListItem extends React.Component {
                 {this.props.name}
             </span>
         }
-        return <button>
+        return <button onClick={this.onClick}>
             {this.props.name}
         </button>
+    }
+
+    onClick = () => {
+        this.props.onSelected(this.props.id);
     }
 }
 
