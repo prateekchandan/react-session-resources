@@ -1,8 +1,10 @@
 import React from 'react';
 import List from "./List";
 
-function App() {
-  return <List></List>;
+class App extends React.Component<{}, {}> {
+  public render(): JSX.Element {
+    return <List />;
+  }
 }
 
 export default App;

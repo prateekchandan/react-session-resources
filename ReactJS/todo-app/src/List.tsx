@@ -1,16 +1,22 @@
 import React from 'react';
-import {todoItemList} from "./TodoItem";
+import {todoItemList, TodoItem} from "./TodoItem";
 import ListItem from './ListItem';
 
-class List extends React.Component {
-    constructor(props) {
+interface ListStates{
+    selectedId: number
+    description: string;
+}
+
+class List extends React.Component<{}, ListStates> {
+    constructor(props: {}) {
         super(props);
         this.state = {
-            selectedId: -1
+            selectedId: -1,
+            description: ""
         };
     }
 
-    render() {
+    public render(): JSX.Element {
         return (
         <React.Fragment>
             <ul>
@@ -24,8 +30,8 @@ class List extends React.Component {
         );
     }
   
-    getAllListItems() {
-        let listItems = [];
+    private getAllListItems(): JSX.Element[] {
+        let listItems: JSX.Element[] = [];
         todoItemList.forEach(item => {
             listItems.push(
             <ListItem 
@@ -37,7 +43,7 @@ class List extends React.Component {
         return listItems;
     }
 
-    onItemSelected = (item) => {
+    private onItemSelected = (item: TodoItem): void => {
         this.setState({
             selectedId: item.id,
             description: item.description

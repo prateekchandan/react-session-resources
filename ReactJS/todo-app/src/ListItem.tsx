@@ -1,7 +1,14 @@
 import React from 'react';
+import { TodoItem } from './TodoItem';
 
-class ListItem extends React.Component {
-    render() {
+export interface ListItemProps {
+    isSelected: boolean;
+    item: TodoItem;
+    onSelected: (item: TodoItem) => void;
+}
+
+class ListItem extends React.Component<ListItemProps, {}> {
+    public render(): JSX.Element {
         if (this.props.isSelected) {
             return <span>
                 {this.props.item.name}
@@ -12,7 +19,7 @@ class ListItem extends React.Component {
         </button>
     }
 
-    onClick = () => {
+    private onClick = (): void => {
         this.props.onSelected(this.props.item);
     }
 }
