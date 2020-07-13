@@ -1,5 +1,6 @@
 import React from 'react';
 import { TodoItem } from './TodoItem';
+import ListGroup from 'react-bootstrap/ListGroup';
 
 export interface ListItemProps {
     isSelected: boolean;
@@ -9,14 +10,9 @@ export interface ListItemProps {
 
 class ListItem extends React.Component<ListItemProps, {}> {
     public render(): JSX.Element {
-        if (this.props.isSelected) {
-            return <span>
-                {this.props.item.name}
-            </span>
-        }
-        return <button onClick={this.onClick}>
+        return <ListGroup.Item variant={this.props.isSelected ? "primary" : ""} onClick={this.onClick}>
             {this.props.item.name}
-        </button>
+        </ListGroup.Item>
     }
 
     private onClick = (): void => {
