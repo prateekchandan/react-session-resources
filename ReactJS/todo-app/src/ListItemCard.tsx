@@ -3,14 +3,15 @@ import { TodoItem } from './TodoItem';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 
-export interface ListContentProps {
+export interface ListItemCardProps {
     item: TodoItem;
 }
 
-class ListContent extends React.Component<ListContentProps, {}> {
+class ListItemCard extends React.Component<ListItemCardProps, {}> {
     public render(): JSX.Element {
         return (
             <Card>
+                <Card.Title>{this.props.item.name}</Card.Title>
                 <Card.Body>
                     <Card.Text>{this.props.item.description}</Card.Text>
                 </Card.Body>
@@ -19,4 +20,4 @@ class ListContent extends React.Component<ListContentProps, {}> {
     }
 }
 
-export default ListContent;
+export default ListItemCard;

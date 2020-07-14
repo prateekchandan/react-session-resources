@@ -10,14 +10,20 @@ export interface ListItemProps {
 
 class ListItem extends React.Component<ListItemProps, {}> {
     public render(): JSX.Element {
-        return <ListGroup.Item variant={this.props.isSelected ? "primary" : ""} onClick={this.onClick}>
-            {this.props.item.name}
-        </ListGroup.Item>
+        return (
+            <ListGroup.Item
+                variant={this.props.isSelected ? 'primary' : ''}
+                onClick={this.onClick}
+                key={this.props.item.id}
+            >
+                {this.props.item.name}
+            </ListGroup.Item>
+        );
     }
 
     private onClick = (): void => {
         this.props.onSelected(this.props.item);
-    }
+    };
 }
 
 export default ListItem;
