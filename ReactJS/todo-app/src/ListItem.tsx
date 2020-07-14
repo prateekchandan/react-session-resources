@@ -16,6 +16,7 @@ class ListItem extends React.Component<ListItemProps, {}> {
                 onClick={this.onClick}
                 key={this.props.item.id}
             >
+                {this.props.item.isComplete ? '✅' : '❌'}{' '}
                 {this.props.item.name}
             </ListGroup.Item>
         );

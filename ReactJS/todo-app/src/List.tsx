@@ -8,12 +8,16 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
 interface ListStates {
-    showAdditionModal: boolean
+    showAdditionModal: boolean;
     selectedItem?: TodoItem;
 }
 
-class List extends React.Component<{}, ListStates> {
-    constructor(props: {}) {
+interface ListProps {
+    onListUpdated: () => void;
+}
+
+class List extends React.Component<ListProps, ListStates> {
+    constructor(props: ListProps) {
         super(props);
         this.state = {
             showAdditionModal: false
@@ -23,28 +27,47 @@ class List extends React.Component<{}, ListStates> {
     public render(): JSX.Element {
         return (
             <React.Fragment>
-            <Row>
-                <Col sm={4}>
-                    <ListGroup>
-                        {this.getAllListItems()}
-                        <ListGroup.Item variant="success" onClick={this.addNewItem}>
-                            + Add new Item
-                        </ListGroup.Item>
-                    </ListGroup>
-                </Col>
-                <Col sm={8}>
-                    {this.state.selectedItem && (
-                        <ListItemCard item={this.state.selectedItem} />
-                    )}
-                </Col>
-            </Row>
-            {this.state.showAdditionModal && <NewItemModal 
-                    onModalClosed = {() => {this.setState({...this.setState, showAdditionModal: false})}}
-                    onItemAdded = {(item: TodoItem) => {
-                        todoItemList.push(item);
-                        this.setState({...this.setState, showAdditionModal: false});
-                    }}
-                />}
+                <Row>
+                    <Col sm={4}>
+                        <ListGroup>
+                            {this.getAllListItems()}
+                            <ListGroup.Item
+                                variant='success'
+                                onClick={this.addNewItem}
+                            >
+                                + Add new Item
+                            </ListGroup.Item>
+                        </ListGroup>
+                    </Col>
+                    <Col sm={8}>
+                        {this.state.selectedItem && (
+                            <ListItemCard
+                                item={this.state.selectedItem}
+                                onItemEdit={() =>
+                                    this.setState({ ...this.state })
+                                }
+                            />
+                        )}
+                    </Col>
+                </Row>
+                {this.state.showAdditionModal && (
+                    <NewItemModal
+                        onModalClosed={() => {
+                            this.setState({
+                                ...this.setState,
+                                showAdditionModal: false
+                            });
+                        }}
+                        onItemAdded={(item: TodoItem) => {
+                            todoItemList.push(item);
+                            this.props.onListUpdated();
+                            this.setState({
+                                ...this.setState,
+                                showAdditionModal: false
+                            });
+                        }}
+                    />
+                )}
             </React.Fragment>
         );
     }
@@ -78,7 +101,7 @@ class List extends React.Component<{}, ListStates> {
             ...this.state,
             showAdditionModal: true
         });
-    }
+    };
 }
 
 export default List;
