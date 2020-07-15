@@ -1,7 +1,7 @@
 import { AnyAction } from "redux";
 import { AppState, initialState } from "../store/store";
-import { ADD_ITEM, SELECT_ITEM, SHOW_NEW_ITEM_MODAL } from "../constants";
-import { TodoItem } from "../TodoItem";
+import { ADD_ITEM, CLOSE_NEW_ITEM_MODAL, SELECT_ITEM, SHOW_NEW_ITEM_MODAL } from "../constants";
+import { TodoItem } from "../components/TodoItem";
 
 export function Reducer(
     state: AppState = initialState,
@@ -11,7 +11,7 @@ export function Reducer(
         case ADD_ITEM:
             return {
                 ...state,
-                itemList: [...state.itemList, action.item],
+                itemList: [...state.itemList, new TodoItem(state.itemList.length, action.name, action.desc)],
                 modalVisible: false,
             };
         case SELECT_ITEM:
@@ -23,6 +23,11 @@ export function Reducer(
             return {
                 ...state,
                 modalVisible: true
+            }
+        case CLOSE_NEW_ITEM_MODAL:
+            return {
+                ...state,
+                modalVisible: false
             }
         default:
             return state;

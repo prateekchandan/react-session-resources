@@ -4,7 +4,13 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
-class NewItemModal extends React.Component<{} /*props*/, {} /*states*/> {
+export interface DispatchMappedProps {
+    closeModal: () => void;
+    submit: (name: string, desc: string) => void;
+}
+
+type NewitemModalProps = DispatchMappedProps
+class NewItemModal extends React.Component<NewitemModalProps /*props*/, {} /*states*/> {
     public render(): JSX.Element {
         return (
             <Modal
@@ -51,17 +57,15 @@ class NewItemModal extends React.Component<{} /*props*/, {} /*states*/> {
         const data: FormData = new FormData(event.currentTarget);
         event.preventDefault();
         // Update store
-        /*this.props.onItemAdded(
-            new TodoItem(
-                todoItemList.length + 1,
-                data.get('name') as string,
-                data.get('desc') as string
-            )
-        );*/
+        this.props.submit(
+            data.get('name') as string,
+            data.get('desc') as string
+        );
     };
 
     private handleClose = ():void => {
         // Update store
+        this.props.closeModal();
     }
 }
 

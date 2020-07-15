@@ -29,7 +29,6 @@ class ListItemCard extends React.Component<ListItemCardProps, {}> {
     }
 
     private toggleComplete = (): void => {
-        this.props.item.toggleComplete();
         // Update store
     };
 }

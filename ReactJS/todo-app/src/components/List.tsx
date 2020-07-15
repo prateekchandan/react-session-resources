@@ -1,26 +1,26 @@
-import React from 'react';
-import { TodoItem } from './TodoItem';
-import ListItem from './ListItem';
-import ListItemCard from './ListItemCard';
-import NewItemModal from './NewItemModal';
-import ListGroup from 'react-bootstrap/ListGroup';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
+import React from "react";
+import { TodoItem } from "./TodoItem";
+import ListItem from "./ListItem";
+import ListItemCard from "./ListItemCard";
+import NewItemModal from "../containers/NewItemModalContainer";
+import ListGroup from "react-bootstrap/ListGroup";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 
-interface ListStates {
-    showAdditionModal: boolean;
+export interface StateMappedProps {
+    isModalVisible: boolean;
     selectedItem?: TodoItem;
     todoItemList: TodoItem[];
 }
 
-interface ListProps {
+export interface DispatchMappedProps {
+    showModal: () => void;
+    onSelected: (id: number) => void
 }
 
-class List extends React.Component<ListProps, ListStates> {
-    constructor(props: ListProps) {
-        super(props);
-    }
+type ListProps = StateMappedProps & DispatchMappedProps
 
+class List extends React.Component<ListProps, {}> {
     public render(): JSX.Element {
         return (
             <React.Fragment>
@@ -29,7 +29,7 @@ class List extends React.Component<ListProps, ListStates> {
                         <ListGroup>
                             {this.getAllListItems()}
                             <ListGroup.Item
-                                variant='success'
+                                variant="success"
                                 onClick={this.showAddNewItemModal}
                             >
                                 + Add new Item
@@ -37,38 +37,35 @@ class List extends React.Component<ListProps, ListStates> {
                         </ListGroup>
                     </Col>
                     <Col sm={8}>
-                        {this.state.selectedItem && (
-                            <ListItemCard
-                                item={this.state.selectedItem}
-                            />
+                        {this.props.selectedItem && (
+                            <ListItemCard item={this.props.selectedItem} />
                         )}
                     </Col>
                 </Row>
-                {this.state.showAdditionModal && (
-                    <NewItemModal/>
-                )}
+                {this.props.isModalVisible && <NewItemModal />}
             </React.Fragment>
         );
     }
 
     private getAllListItems = (): JSX.Element[] => {
-        let listItems: JSX.Element[] = [];
-        this.state.todoItemList.forEach((item) => {
-            listItems.push(
+        return this.props.todoItemList.map((item) => {
+            return (
                 <ListItem
+                    key={item.id}
                     item={item}
                     isSelected={
-                        this.state.selectedItem !== undefined &&
-                        item.id == this.state.selectedItem.id
+                        this.props.selectedItem !== undefined &&
+                        item.id == this.props.selectedItem.id
                     }
+                    onSelected={this.props.onSelected}
                 />
             );
         });
-        return listItems;
-    }
+    };
 
     private showAddNewItemModal = (): void => {
         // update store
+        this.props.showModal();
     };
 }
 
