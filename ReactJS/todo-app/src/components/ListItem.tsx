@@ -5,7 +5,6 @@ import ListGroup from 'react-bootstrap/ListGroup';
 export interface ListItemProps {
     isSelected: boolean;
     item: TodoItem;
-    onSelected: (item: TodoItem) => void;
 }
 
 class ListItem extends React.Component<ListItemProps, {}> {
@@ -23,7 +22,7 @@ class ListItem extends React.Component<ListItemProps, {}> {
     }
 
     private onClick = (): void => {
-        this.props.onSelected(this.props.item);
+        // update store
     };
 }
 

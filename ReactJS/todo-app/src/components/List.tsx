@@ -1,5 +1,5 @@
 import React from 'react';
-import { todoItemList, TodoItem } from './TodoItem';
+import { TodoItem } from './TodoItem';
 import ListItem from './ListItem';
 import ListItemCard from './ListItemCard';
 import NewItemModal from './NewItemModal';
@@ -10,18 +10,15 @@ import Row from 'react-bootstrap/Row';
 interface ListStates {
     showAdditionModal: boolean;
     selectedItem?: TodoItem;
+    todoItemList: TodoItem[];
 }
 
 interface ListProps {
-    onListUpdated: () => void;
 }
 
 class List extends React.Component<ListProps, ListStates> {
     constructor(props: ListProps) {
         super(props);
-        this.state = {
-            showAdditionModal: false
-        };
     }
 
     public render(): JSX.Element {
@@ -33,7 +30,7 @@ class List extends React.Component<ListProps, ListStates> {
                             {this.getAllListItems()}
                             <ListGroup.Item
                                 variant='success'
-                                onClick={this.addNewItem}
+                                onClick={this.showAddNewItemModal}
                             >
                                 + Add new Item
                             </ListGroup.Item>
@@ -43,38 +40,20 @@ class List extends React.Component<ListProps, ListStates> {
                         {this.state.selectedItem && (
                             <ListItemCard
                                 item={this.state.selectedItem}
-                                onItemEdit={() =>
-                                    this.setState({ ...this.state })
-                                }
                             />
                         )}
                     </Col>
                 </Row>
                 {this.state.showAdditionModal && (
-                    <NewItemModal
-                        onModalClosed={() => {
-                            this.setState({
-                                ...this.setState,
-                                showAdditionModal: false
-                            });
-                        }}
-                        onItemAdded={(item: TodoItem) => {
-                            todoItemList.push(item);
-                            this.props.onListUpdated();
-                            this.setState({
-                                ...this.setState,
-                                showAdditionModal: false
-                            });
-                        }}
-                    />
+                    <NewItemModal/>
                 )}
             </React.Fragment>
         );
     }
 
-    private getAllListItems(): JSX.Element[] {
+    private getAllListItems = (): JSX.Element[] => {
         let listItems: JSX.Element[] = [];
-        todoItemList.forEach((item) => {
+        this.state.todoItemList.forEach((item) => {
             listItems.push(
                 <ListItem
                     item={item}
@@ -82,25 +61,14 @@ class List extends React.Component<ListProps, ListStates> {
                         this.state.selectedItem !== undefined &&
                         item.id == this.state.selectedItem.id
                     }
-                    onSelected={this.onItemSelected}
                 />
             );
         });
         return listItems;
     }
 
-    private onItemSelected = (item: TodoItem): void => {
-        this.setState({
-            ...this.state,
-            selectedItem: item
-        });
-    };
-
-    private addNewItem = (): void => {
-        this.setState({
-            ...this.state,
-            showAdditionModal: true
-        });
+    private showAddNewItemModal = (): void => {
+        // update store
     };
 }
 

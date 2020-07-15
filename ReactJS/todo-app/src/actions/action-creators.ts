@@ -1,4 +1,4 @@
-import { TodoItem } from "../TodoItem"
+import { TodoItem } from "../components/TodoItem"
 import { AnyAction } from "redux"
 import { ADD_ITEM, SELECT_ITEM, SHOW_NEW_ITEM_MODAL } from "../constants"
 

@@ -1,15 +1,10 @@
 import React, { FormEvent } from 'react';
-import { TodoItem, todoItemList } from './TodoItem';
+import { TodoItem } from './TodoItem';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
-export interface NewItemModalProps {
-    onModalClosed: () => void;
-    onItemAdded: (item: TodoItem) => void;
-}
-
-class NewItemModal extends React.Component<NewItemModalProps, {}> {
+class NewItemModal extends React.Component<{} /*props*/, {} /*states*/> {
     public render(): JSX.Element {
         return (
             <Modal
@@ -17,7 +12,7 @@ class NewItemModal extends React.Component<NewItemModalProps, {}> {
                 size='lg'
                 aria-labelledby='contained-modal-title-vcenter'
                 centered
-                onHide={this.props.onModalClosed}
+                onHide={this.handleClose}
             >
                 <Form onSubmit={this.handleSubmit}>
                     <Modal.Header closeButton>
@@ -43,7 +38,7 @@ class NewItemModal extends React.Component<NewItemModalProps, {}> {
                     </Modal.Body>
                     <Modal.Footer>
                         <Button type='submit'>Submit</Button>
-                        <Button onClick={this.props.onModalClosed}>
+                        <Button onClick={this.handleClose}>
                             Close
                         </Button>
                     </Modal.Footer>
@@ -55,14 +50,19 @@ class NewItemModal extends React.Component<NewItemModalProps, {}> {
     private handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
         const data: FormData = new FormData(event.currentTarget);
         event.preventDefault();
-        this.props.onItemAdded(
+        // Update store
+        /*this.props.onItemAdded(
             new TodoItem(
                 todoItemList.length + 1,
                 data.get('name') as string,
                 data.get('desc') as string
             )
-        );
+        );*/
     };
+
+    private handleClose = ():void => {
+        // Update store
+    }
 }
 
 export default NewItemModal;

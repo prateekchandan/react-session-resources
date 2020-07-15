@@ -1,11 +1,10 @@
 import React from 'react';
-import { TodoItem, todoItemList } from './TodoItem';
+import { TodoItem } from './TodoItem';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 
 export interface ListItemCardProps {
     item: TodoItem;
-    onItemEdit?: () => void;
 }
 
 class ListItemCard extends React.Component<ListItemCardProps, {}> {
@@ -31,8 +30,7 @@ class ListItemCard extends React.Component<ListItemCardProps, {}> {
 
     private toggleComplete = (): void => {
         this.props.item.toggleComplete();
-        if (this.props.onItemEdit) this.props.onItemEdit();
-        this.setState({});
+        // Update store
     };
 }
 
